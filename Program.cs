@@ -27,15 +27,15 @@ namespace C2GTool
                 case PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_CUI:
                     Console.WriteLine("Console app detected.\r\nConverting...");
 
-                    var o = BitConverter.GetBytes((UInt16)PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI);
+                    var subsysSetting = BitConverter.GetBytes((UInt16)PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI);
 
                     if (!BitConverter.IsLittleEndian)
-                        Array.Reverse(o);
+                        Array.Reverse(subsysSetting);
 
                     if (peFile.Stream.CanWrite)
                     {
                         peFile.Stream.Seek(subsysOffset, SeekOrigin.Begin);
-                        peFile.Stream.Write(o, 0, o.Length);
+                        peFile.Stream.Write(subsysSetting, 0, subsysSetting.Length);
                     }
                     else
                     {
