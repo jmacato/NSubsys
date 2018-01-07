@@ -405,6 +405,8 @@ namespace C2GTool
         /// The file header
         /// </summary>
         private IMAGE_FILE_HEADER fileHeader;
+        private long fileHeaderOffset;
+
         /// <summary>
         /// Optional 32 bit file header 
         /// </summary>
@@ -437,9 +439,11 @@ namespace C2GTool
 
             UInt32 ntHeadersSignature = reader.ReadUInt32();
             fileHeader = FromBinaryReader<IMAGE_FILE_HEADER>(reader);
+            this.fileHeaderOffset = curFileStream.Position;
             if (this.Is32BitHeader)
             {
                 optionalHeader32 = FromBinaryReader<IMAGE_OPTIONAL_HEADER32>(reader);
+
             }
             else
             {
@@ -505,6 +509,7 @@ namespace C2GTool
 
         public void Dispose()
         {
+            curFileStream.Close();
             curFileStream.Dispose();
         }
 
@@ -540,10 +545,7 @@ namespace C2GTool
         /// </summary>
         public IMAGE_OPTIONAL_HEADER32 OptionalHeader32
         {
-            get
-            {
-                return optionalHeader32;
-            }
+            get => optionalHeader32;
         }
 
         /// <summary>
@@ -551,18 +553,25 @@ namespace C2GTool
         /// </summary>
         public IMAGE_OPTIONAL_HEADER64 OptionalHeader64
         {
-            get
-            {
-                return optionalHeader64;
-            }
+            get => optionalHeader64;
+        }
+
+        /// <summary>
+        /// Gets the PE file stream for R/W functions.
+        /// </summary> 
+        public FileStream Stream
+        {
+            get => curFileStream;
+        }
+
+        public long MainHeaderOffset
+        {
+            get => fileHeaderOffset;
         }
 
         public IMAGE_SECTION_HEADER[] ImageSectionHeaders
         {
-            get
-            {
-                return imageSectionHeaders;
-            }
+            get => imageSectionHeaders;
         }
 
         #endregion Properties
