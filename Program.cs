@@ -13,13 +13,13 @@ namespace C2GTool
         {
             var peFile = new PeUtility(exeFilePath);
 
-            PeUtility.SubSystemType SubsystemVal;
-            var settingOffset = peFile.MainHeaderOffset;
+            PeUtility.SubSystemType subsysVal;
+            var subsysOffset = peFile.MainHeaderOffset;
             var headerType = peFile.Is32BitHeader ? typeof(IMAGE_OPTIONAL_HEADER32) : typeof(IMAGE_OPTIONAL_HEADER64);
-            SubsystemVal = (PeUtility.SubSystemType)peFile.OptionalHeader64.Subsystem;
-            settingOffset += Marshal.OffsetOf(headerType, "Subsystem").ToInt32();
+            subsysVal = (PeUtility.SubSystemType)peFile.OptionalHeader64.Subsystem;
+            subsysOffset += Marshal.OffsetOf(headerType, "Subsystem").ToInt32();
 
-            switch (SubsystemVal)
+            switch (subsysVal)
             {
                 case PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI:
                     Console.WriteLine("Executable file is already a Win32 App!");
@@ -34,7 +34,7 @@ namespace C2GTool
 
                     if (peFile.Stream.CanWrite)
                     {
-                        peFile.Stream.Seek(settingOffset, SeekOrigin.Begin);
+                        peFile.Stream.Seek(subsysOffset, SeekOrigin.Begin);
                         peFile.Stream.Write(o, 0, o.Length);
                     }
                     else
@@ -45,7 +45,7 @@ namespace C2GTool
                     Console.WriteLine("Conversion Complete...");
                     break;
                 default:
-                    Console.WriteLine($"Unsupported subsystem : {Enum.GetName(typeof(PeUtility.SubSystemType), SubsystemVal)}.");
+                    Console.WriteLine($"Unsupported subsystem : {Enum.GetName(typeof(PeUtility.SubSystemType), subsysVal)}.");
                     return;
             }
             peFile.Dispose();
@@ -53,11 +53,6 @@ namespace C2GTool
 
         static void Main(string[] args)
         {
-
-#if DEBUG
-            args = new string[] { @"C:\Users\Jumar\Desktop\kzanx\KzAn.exe" };
-#endif
-
             if (args.Length > 0)
             {
                 var inEXE = new FileInfo(args[0]);
