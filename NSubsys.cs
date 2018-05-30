@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using static PeUtility;
+using static NSubsys.PeUtility;
 
 namespace NSubsys.Tasks
 {
