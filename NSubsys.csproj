@@ -1,12 +1,37 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
+    <AssemblyName>NSubsys.Tasks</AssemblyName>
+    <PackageId>NSubsys</PackageId>
+    <NuspecFile>NSubsys.nuspec</NuspecFile>
+    <PackageRequireLicenseAcceptance Condition="'$(PackageRequireLicenseAcceptance)' != 'True'">False</PackageRequireLicenseAcceptance>
+    <DevelopmentDependency Condition="'$(DevelopmentDependency)' != 'True'">False</DevelopmentDependency>
+    <NuspecProperties>
+        $(NuspecProperties);
+        id=$(PackageId);
+        version=$(PackageVersion);
+        authors=$(Authors);
+        owners=$(Company);
+        requireLicenseAcceptance=$(PackageRequireLicenseAcceptance.ToLower());
+        developmentDependency=$(DevelopmentDependency.ToLower());
+        licenseUrl=$(PackageLicenseUrl);
+        projectUrl=$(PackageProjectUrl);
+        iconUrl=$(PackageIconUrl);
+        description=$(PackageDescription);
+        copyright=$(Copyright);
+        tags=$(PackageTags);
+        repositoryType=$(RepositoryType);
+        repositoryUrl=$(RepositoryUrl);
+        targetsFile=build\NSubsys.targets;
+        dll=$(TargetPath);
+    </NuspecProperties>
+    <IsTool>True</IsTool>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="build\**" Pack="True" PackagePath="build\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Build.Framework" Version="15.7.179" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.7.179" />
+    <PackageReference Include="Microsoft.Build.Framework" Version="15.1.548" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.548" PrivateAssets="All" />
   </ItemGroup>
 </Project>

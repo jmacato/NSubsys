@@ -460,34 +460,6 @@ namespace NSubsys
         }
 
         /// <summary>
-        /// Gets the header of the .NET assembly that called this function
-        /// </summary>
-        /// <returns></returns>
-        public static PeUtility GetCallingAssemblyHeader()
-        {
-            // Get the path to the calling assembly, which is the path to the
-            // DLL or EXE that we want the time of
-            string filePath = System.Reflection.Assembly.GetCallingAssembly().Location;
-
-            // Get and return the timestamp
-            return new PeUtility(filePath);
-        }
-
-        /// <summary>
-        /// Gets the header of the .NET assembly that called this function
-        /// </summary>
-        /// <returns></returns>
-        public static PeUtility GetAssemblyHeader()
-        {
-            // Get the path to the calling assembly, which is the path to the
-            // DLL or EXE that we want the time of
-            string filePath = System.Reflection.Assembly.GetAssembly(typeof(PeUtility)).Location;
-
-            // Get and return the timestamp
-            return new PeUtility(filePath);
-        }
-
-        /// <summary>
         /// Reads in a block from a file and converts it to the struct
         /// type specified by the template parameter
         /// </summary>
@@ -509,7 +481,6 @@ namespace NSubsys
 
         public void Dispose()
         {
-            curFileStream.Close();
             curFileStream.Dispose();
         }
 
