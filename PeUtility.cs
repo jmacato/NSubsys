@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 using System.IO;
 
 
-namespace C2GTool
+namespace NSubsys
 {
 
     /// <summary>
