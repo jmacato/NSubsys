@@ -16,7 +16,13 @@ namespace C2GTool
             PeUtility.SubSystemType subsysVal;
             var subsysOffset = peFile.MainHeaderOffset;
             var headerType = peFile.Is32BitHeader ? typeof(IMAGE_OPTIONAL_HEADER32) : typeof(IMAGE_OPTIONAL_HEADER64);
-            subsysVal = (PeUtility.SubSystemType)peFile.OptionalHeader64.Subsystem;
+
+            if (peFile.Is32BitHeader)
+                subsysVal = (PeUtility.SubSystemType)peFile.OptionalHeader32.Subsystem;
+            else
+                subsysVal = (PeUtility.SubSystemType)peFile.OptionalHeader64.Subsystem;
+
+
             subsysOffset += Marshal.OffsetOf(headerType, "Subsystem").ToInt32();
 
             switch (subsysVal)
@@ -25,7 +31,8 @@ namespace C2GTool
                     Console.WriteLine("Executable file is already a Win32 App!");
                     break;
                 case PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_CUI:
-                    Console.WriteLine("Console app detected.\r\nConverting...");
+                    Console.WriteLine("Console app detected...");
+                    Console.WriteLine("Converting...");
 
                     var subsysSetting = BitConverter.GetBytes((UInt16)PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI);
 
@@ -36,13 +43,14 @@ namespace C2GTool
                     {
                         peFile.Stream.Seek(subsysOffset, SeekOrigin.Begin);
                         peFile.Stream.Write(subsysSetting, 0, subsysSetting.Length);
+                        Console.WriteLine("Conversion Complete...");
                     }
                     else
                     {
-                        Console.WriteLine("Can't write changes! Check priviledges is sufficient or not.");
+                        Console.WriteLine("Can't write changes!");
+                        Console.WriteLine("Conversion Failed...");
                     }
 
-                    Console.WriteLine("Conversion Complete...");
                     break;
                 default:
                     Console.WriteLine($"Unsupported subsystem : {Enum.GetName(typeof(PeUtility.SubSystemType), subsysVal)}.");
