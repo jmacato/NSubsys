@@ -3,7 +3,8 @@
         <NSubsysTasksPath Condition="'$(NSubsysTasksPath)' == ''">$(MSBuildThisFileDirectory)..\tools\NSubsys.Tasks.dll</NSubsysTasksPath>
     </PropertyGroup>
     <UsingTask TaskName="NSubsys.Tasks.NSubsys" AssemblyFile="$(NSubsysTasksPath)" />
-    <Target Name="NSubsys" AfterTargets="Build">
-        <NSubsys TargetFile="$(TargetPath)" />
+    <Target Name="NSubsys" AfterTargets="Build" Condition="'$(OutputType)' == 'Exe' OR '$(OutputType)' == 'WinExe'">      
+      <NSubsys TargetFile="$(TargetPath)" />
     </Target>
 </Project>
+
