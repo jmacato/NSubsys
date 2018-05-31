@@ -1,19 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>NSubsys.Tasks</AssemblyName>
-    <Title>NSubsys</Title>
     <PackageId>NSubsys</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <NuspecFile>NSubsys.nuspec</NuspecFile>
     <IsTool>True</IsTool>
-    <Version>1.0.0</Version>
-    <Authors>jmacato;jp2masa</Authors>
-    <Owners>jmacato</Owners>
-    <RepositoryUrl>https://github.com/jmacato/NSubsys</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/jmacato/NSubsys</PackageProjectUrl>
-    <PackageTags>subsystem;exe;win32;console</PackageTags>
-    <Description>Hides console window from dotnet apps by changing EXE subsystem.</Description>
-    <Copyright>Copypright (C) 2018 Jumar Macato</Copyright>
-    <DevelopmentDependency>true</DevelopmentDependency>
   </PropertyGroup>
   <ItemGroup>
     <Content Include="build\**" Pack="True" PackagePath="build\" />
@@ -21,6 +13,15 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Build.Framework" Version="15.1.548" PrivateAssets="All" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="15.1.548" PrivateAssets="All" />
-    <PackageReference Update="@(PackageReference)" PrivateAssets="All" />
   </ItemGroup>
+  <Target Name="GenerateNuspecProperties" BeforeTargets="GenerateNuspec">
+    <PropertyGroup>
+      <NuspecProperties>
+        $(NuspecProperties);
+        version=$(PackageVersion);
+        targetsFile=build\NSubsys.targets;
+        dll=$(TargetPath);
+      </NuspecProperties>
+    </PropertyGroup>
+  </Target>
 </Project>
