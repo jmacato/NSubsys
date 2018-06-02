@@ -1,6 +1,6 @@
 <Project>
     <PropertyGroup>
-        <NSubsysTasksPath Condition="'$(NSubsysTasksPath)' == ''">$(MSBuildThisFileDirectory)..\tools\NSubsys.Tasks.dll</NSubsysTasksPath>
+        <NSubsysTasksPath Condition="'$(NSubsysTasksPath)' == ''">$(MSBuildThisFileDirectory)..\tool\NSubsys.Tasks.dll</NSubsysTasksPath>
     </PropertyGroup>
     <UsingTask TaskName="NSubsys.Tasks.NSubsys" AssemblyFile="$(NSubsysTasksPath)" />
     <Target Name="NSubsys"

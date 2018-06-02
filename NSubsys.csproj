@@ -3,7 +3,8 @@
     <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>NSubsys.Tasks</AssemblyName>
     <PackageId>NSubsys</PackageId>
-    <PackageVersion>1.0.0</PackageVersion>
+    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionSuffix>build$([System.DateTime]::Now.ToString('yyyyMMdd-HHmm'))</VersionSuffix>
     <NuspecFile>NSubsys.nuspec</NuspecFile>
     <IsTool>True</IsTool>
   </PropertyGroup>

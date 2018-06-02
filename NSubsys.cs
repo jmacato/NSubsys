@@ -36,6 +36,8 @@ namespace NSubsys.Tasks
 
         private bool ProcessFile(string exeFilePath)
         {
+            Log.LogMessage("NSubsys : Subsystem Changer for Windows PE files.");
+
             using (var peFile = new PeUtility(exeFilePath))
             {
                 PeUtility.SubSystemType subsysVal;
