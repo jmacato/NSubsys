@@ -13,7 +13,7 @@
         <repository type="$repositoryType$" url="$repositoryUrl$" />
     </metadata>
     <files>
-        <file src="$targetsFile$" target="tool\NSubsys.targets" />
+        <file src="$targetsFile$" target="build\NSubsys.targets" />
         <file src="$dll$" target="tool\NSubsys.Tasks.dll" />
     </files>
 </package>
