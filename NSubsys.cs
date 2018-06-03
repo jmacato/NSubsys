@@ -37,8 +37,9 @@ namespace NSubsys.Tasks
         private bool ProcessFile(string exeFilePath)
         {
             Log.LogMessage("NSubsys : Subsystem Changer for Windows PE files.");
+			Log.LogMessage($"NSubsys : Target EXE {exeFilePath}.");
 
-            using (var peFile = new PeUtility(exeFilePath))
+			using (var peFile = new PeUtility(exeFilePath))
             {
                 PeUtility.SubSystemType subsysVal;
                 var subsysOffset = peFile.MainHeaderOffset;
