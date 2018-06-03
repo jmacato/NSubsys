@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <AssemblyName>NSubsys.Tasks</AssemblyName>
     <PackageId>NSubsys</PackageId>
     <VersionPrefix>0.7.0</VersionPrefix>
