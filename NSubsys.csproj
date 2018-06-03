@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>NSubsys.Tasks</AssemblyName>
     <PackageId>NSubsys</PackageId>
-    <VersionPrefix>1.0.0</VersionPrefix>
+    <VersionPrefix>0.7.0</VersionPrefix>
     <VersionSuffix>build$([System.DateTime]::Now.ToString('yyyyMMdd-HHmm'))</VersionSuffix>
     <NuspecFile>NSubsys.nuspec</NuspecFile>
     <IsTool>True</IsTool>
