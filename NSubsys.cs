@@ -17,19 +17,13 @@ namespace NSubsys.Tasks
             var fileInfo = new FileInfo(TargetFile);
 
             if (!fileInfo.Exists)
-            {
                 Log.LogError($"File doesn't exist! Path: '{TargetFile}'");
-            }
 
             if (fileInfo.Extension.Equals("exe", StringComparison.OrdinalIgnoreCase))
-            {
                 Log.LogError("This tool only supports PE .exe files.");
-            }
 
             if (Log.HasLoggedErrors)
-            {
                 return false;
-            }
 
             return ProcessFile(fileInfo.FullName);
         }
@@ -37,21 +31,15 @@ namespace NSubsys.Tasks
         private bool ProcessFile(string exeFilePath)
         {
             Log.LogMessage("NSubsys : Subsystem Changer for Windows PE files.");
-			Log.LogMessage($"NSubsys : Target EXE {exeFilePath}.");
+            Log.LogMessage($"NSubsys : Target EXE `{exeFilePath}`.");
 
-			using (var peFile = new PeUtility(exeFilePath))
+            using (var peFile = new PeUtility(exeFilePath))
             {
-                PeUtility.SubSystemType subsysVal;
+                SubSystemType subsysVal;
                 var subsysOffset = peFile.MainHeaderOffset;
-                var headerType = peFile.Is32BitHeader ? typeof(IMAGE_OPTIONAL_HEADER32) : typeof(IMAGE_OPTIONAL_HEADER64);
 
-                if (peFile.Is32BitHeader)
-                    subsysVal = (PeUtility.SubSystemType)peFile.OptionalHeader32.Subsystem;
-                else
-                    subsysVal = (PeUtility.SubSystemType)peFile.OptionalHeader64.Subsystem;
-
-
-                subsysOffset += Marshal.OffsetOf(headerType, "Subsystem").ToInt32();
+                subsysVal = (SubSystemType)peFile.OptionalHeader.Subsystem;
+                subsysOffset += Marshal.OffsetOf<IMAGE_OPTIONAL_HEADER>("Subsystem").ToInt32();
 
                 switch (subsysVal)
                 {
@@ -62,7 +50,7 @@ namespace NSubsys.Tasks
                         Log.LogMessage("Console app detected...");
                         Log.LogMessage("Converting...");
 
-                        var subsysSetting = BitConverter.GetBytes((UInt16)PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI);
+                        var subsysSetting = BitConverter.GetBytes((ushort)SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI);
 
                         if (!BitConverter.IsLittleEndian)
                             Array.Reverse(subsysSetting);
@@ -81,7 +69,7 @@ namespace NSubsys.Tasks
 
                         return true;
                     default:
-                        Log.LogMessage($"Unsupported subsystem : {Enum.GetName(typeof(PeUtility.SubSystemType), subsysVal)}.");
+                        Log.LogMessage($"Unsupported subsystem : {Enum.GetName(typeof(SubSystemType), subsysVal)}.");
                         return false;
                 }
             }
