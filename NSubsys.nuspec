@@ -3,12 +3,12 @@
     <metadata>
         <id>NSubsys</id>
         <version>$version$</version>
-        <authors>jmacato;jp2masa</authors>
+        <authors>jmacato,jp2masa</authors>
         <owners>jmacato</owners>
         <developmentDependency>true</developmentDependency>
         <projectUrl>https://github.com/jmacato/NSubsys</projectUrl>
         <description>Hides console window from dotnet apps by changing EXE subsystem.</description>
-        <copyright>Copypright (C) 2018 Jumar Macato</copyright>
+        <copyright>Copypright (C) 2019 Jumar Macato</copyright>
         <tags>csharp;subsystem;exe;win32;console</tags>
         <repository type="$repositoryType$" url="$repositoryUrl$" />
     </metadata>

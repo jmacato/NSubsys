@@ -30,8 +30,8 @@ namespace NSubsys.Tasks
 
         private bool ProcessFile(string exeFilePath)
         {
-            Log.LogMessage("NSubsys : Subsystem Changer for Windows PE files.");
-            Log.LogMessage($"NSubsys : Target EXE `{exeFilePath}`.");
+            Log.LogMessage("NSubsys Subsystem Changer for Windows PE files.");
+            Log.LogMessage($"[NSubsys] Target EXE `{exeFilePath}`.");
 
             using (var peFile = new PeUtility(exeFilePath))
             {
@@ -44,7 +44,7 @@ namespace NSubsys.Tasks
                 switch (subsysVal)
                 {
                     case PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_GUI:
-                        Log.LogMessage("Executable file is already a Win32 App!");
+                        Log.LogWarning("Executable file is already a Win32 App!");
                         return true;
                     case PeUtility.SubSystemType.IMAGE_SUBSYSTEM_WINDOWS_CUI:
                         Log.LogMessage("Console app detected...");
